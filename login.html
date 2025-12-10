@@ -2,16 +2,93 @@
 <head>
   <title>Login - WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .login-container {
+      width: 350px;
+      padding: 30px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+      margin: 120px auto;
+      animation: slideDown 0.6s ease;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    body {
+      background: linear-gradient(to right, #0057d9, #0099ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-title {
+      font-size: 26px;
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .login-sub {
+      color: #e6e6e6;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    input {
+      width: 90%;
+      margin: 10px auto;
+      padding: 10px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+    }
+
+    .login-btn {
+      width: 95%;
+      padding: 10px;
+      border: none;
+      background: #002b80;
+      color: white;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .login-btn:hover {
+      background: #001f5c;
+    }
+
+    .login-container a {
+      color: #ffffff;
+      text-decoration: underline;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-  <h2>Login</h2>
-  <form onsubmit="loginUser(event)">
-    <input type="email" id="loginEmail" placeholder="Email" required><br>
-    <input type="password" id="loginPassword" placeholder="Password" required><br>
-    <button type="submit">Login</button>
-  </form>
-  <a href="register.html">Create Account</a>
+
+  <div class="login-container">
+    <h2 class="login-title">Welcome Back 👋</h2>
+    <p class="login-sub">Login to continue to WealthWise Hub</p>
+
+    <form onsubmit="loginUser(event)">
+      <input type="email" id="loginEmail" placeholder="Enter Email" required><br>
+      <input type="password" id="loginPassword" placeholder="Enter Password" required><br>
+      <button class="login-btn" type="submit">Login</button>
+    </form>
+
+    <p style="margin-top:15px;">
+      <a href="register.html">Don't have an account? Register</a>
+    </p>
+  </div>
 
   <script src="js/auth.js"></script>
 </body>
 </html>
+
