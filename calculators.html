@@ -1,6 +1,7 @@
+=<!DOCTYPE html>
 <html>
 <head>
-  <title>Investment Calculators - WealthWise Hub</title>
+  <title>Investment Calculators | WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -15,33 +16,75 @@
   <button onclick="openThemeModal()">⚙ Settings</button>
 </nav>
 
-<h2 style="color:white;text-align:center;">Investment Calculators</h2>
+<h2 style="color:white;text-align:center;margin-top:20px;">Investment Calculators Suite</h2>
 
+<!-- SIP -->
 <section class="glass-card">
   <h3>SIP Calculator</h3>
   <input type="number" id="sipInvest" placeholder="Monthly Investment (₹)">
   <input type="number" id="sipYears" placeholder="Years">
-  <input type="number" id="sipRate" placeholder="Rate: default 12%">
-  <button onclick="sipCalculator()">Calculate SIP</button>
+  <input type="number" id="sipRate" placeholder="Rate (default 12%)">
+  <button onclick="sipCalculator()">Calculate</button>
   <p id="sipResult"></p>
 </section>
 
+<!-- FD -->
 <section class="glass-card">
-  <h3>FD Calculator</h3>
+  <h3>Fixed Deposit (FD) Calculator</h3>
   <input type="number" id="fdAmount" placeholder="Deposit (₹)">
   <input type="number" id="fdYears" placeholder="Years">
-  <input type="number" id="fdRate" placeholder="Rate: default 7%">
-  <button onclick="fdCalculator()">Calculate FD</button>
+  <input type="number" id="fdRate" placeholder="Rate (default 7%)">
+  <button onclick="fdCalculator()">Calculate</button>
   <p id="fdResult"></p>
 </section>
 
+<!-- EMI -->
 <section class="glass-card">
-  <h3>EMI Calculator</h3>
+  <h3>Loan EMI Calculator</h3>
   <input type="number" id="emiLoan" placeholder="Loan Amount">
   <input type="number" id="emiYears" placeholder="Years">
   <input type="number" id="emiRate" placeholder="Interest Rate">
-  <button onclick="emiCalculator()">Calculate EMI</button>
+  <button onclick="emiCalculator()">Calculate</button>
   <p id="emiResult"></p>
+</section>
+
+<!-- COMPOUND INTEREST -->
+<section class="glass-card">
+  <h3>Compound Interest Calculator</h3>
+  <input type="number" id="ciPrincipal" placeholder="Principal (₹)">
+  <input type="number" id="ciRate" placeholder="Interest Rate %">
+  <input type="number" id="ciYears" placeholder="Years">
+  <button onclick="compoundInterest()">Calculate</button>
+  <p id="ciResult"></p>
+</section>
+
+<!-- SIMPLE INTEREST -->
+<section class="glass-card">
+  <h3>Simple Interest Calculator</h3>
+  <input type="number" id="siPrincipal" placeholder="Principal (₹)">
+  <input type="number" id="siRate" placeholder="Interest Rate %">
+  <input type="number" id="siYears" placeholder="Years">
+  <button onclick="simpleInterest()">Calculate</button>
+  <p id="siResult"></p>
+</section>
+
+<!-- SWP CALCULATOR -->
+<section class="glass-card">
+  <h3>SWP - Systematic Withdrawal Plan</h3>
+  <input type="number" id="swpCorpus" placeholder="Total Corpus (₹)">
+  <input type="number" id="swpMonthly" placeholder="Monthly Withdrawal (₹)">
+  <input type="number" id="swpRate" placeholder="Return Rate % (default 12)">
+  <button onclick="swpCalculator()">Calculate</button>
+  <p id="swpResult"></p>
+</section>
+
+<!-- Retirement Corpus -->
+<section class="glass-card">
+  <h3>Retirement Corpus Needed</h3>
+  <input type="number" id="rtMonthly" placeholder="Monthly Expense After Retirement">
+  <input type="number" id="rtYears" placeholder="Years After Retirement">
+  <button onclick="retirementNeed()">Calculate</button>
+  <p id="rtResult"></p>
 </section>
 
 <!-- Theme Modal -->
@@ -49,10 +92,10 @@
   <div class="theme-modal-content">
     <h3>Select Theme</h3>
     <div class="theme-options">
-      <div class="theme-box" onclick="setTheme('default')"></div>
-      <div class="theme-box" onclick="setTheme('theme-purple')"></div>
-      <div class="theme-box" onclick="setTheme('theme-green')"></div>
-      <div class="theme-box" onclick="setTheme('theme-gold')"></div>
+      <div class="theme-box" onclick="setTheme('default')" style="background: linear-gradient(135deg,#0057d9,#0099ff)"></div>
+      <div class="theme-box" onclick="setTheme('theme-purple')" style="background: linear-gradient(135deg,#4b007d,#9b4dff)"></div>
+      <div class="theme-box" onclick="setTheme('theme-green')" style="background: linear-gradient(135deg,#00754d,#00b46e)"></div>
+      <div class="theme-box" onclick="setTheme('theme-gold')" style="background: linear-gradient(135deg,#000,#2c2c2c)"></div>
     </div>
     <button onclick="closeThemeModal()">Close</button>
   </div>
