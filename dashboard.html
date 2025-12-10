@@ -1,0 +1,77 @@
+<html>
+<head>
+  <title>Dashboard - WealthWise Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="initTheme(); checkAuth(); loadDashboard(); drawChart();">
+
+  <!-- LOADER -->
+  <div id="loader" class="loader hidden">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- TOP NAV -->
+  <nav class="topnav">
+    <span class="logo">WealthWise Hub</span>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="calculators.html">Calculators</a>
+    <a href="profile.html">Profile</a>
+    <button onclick="toggleDarkMode()">🌓 Mode</button>
+    <button onclick="logoutUser()">Logout</button>
+  </nav>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h3>Menu</h3>
+    <a onclick="scrollToSection('balanceSection')">🏠 Overview</a>
+    <a onclick="scrollToSection('depositSection')">💰 Deposit</a>
+    <a onclick="scrollToSection('withdrawSection')">💸 Withdraw</a>
+    <a onclick="scrollToSection('goalSection')">🎯 Goals</a>
+    <a onclick="scrollToSection('reportSection')">📄 Reports</a>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <h2 id="welcome"></h2>
+
+    <section id="balanceSection" class="card dashboard-container">
+      <h3>Balance: ₹<span id="balance">0</span></h3>
+      <canvas id="balanceChart" width="350" height="200"></canvas>
+    </section>
+
+    <section id="depositSection" class="card">
+      <h3>Deposit Money</h3>
+      <input type="number" id="amount" placeholder="Enter amount">
+      <button onclick="deposit()">Deposit</button>
+    </section>
+
+    <section id="withdrawSection" class="card">
+      <h3>Withdraw Money</h3>
+      <input type="number" id="amount" placeholder="Enter amount">
+      <button onclick="withdraw()">Withdraw</button>
+    </section>
+
+    <section id="goalSection" class="card">
+      <h3>Goal Savings Predictor</h3>
+      <input type="number" id="goalAmount" placeholder="Goal (₹)">
+      <input type="number" id="goalMonthly" placeholder="Monthly Save (₹)">
+      <button onclick="goalPrediction()">Predict</button>
+      <p id="goalResult"></p>
+    </section>
+
+    <section id="reportSection" class="card">
+      <h3>Report / Analytics</h3>
+      <button onclick="exportPDF()">Download Report PDF</button>
+      <button onclick="exportCSV()">Export Transactions CSV</button>
+      <button onclick="monthlySpend()">Monthly Spend Summary</button>
+      <ul id="transactionList"></ul>
+    </section>
+  </main>
+
+  <script src="js/auth.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

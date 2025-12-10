@@ -1,0 +1,73 @@
+<html>
+<head>
+  <title>Investment Calculators - WealthWise Hub</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body onload="initTheme();">
+
+  <nav class="topnav">
+    <span class="logo">WealthWise Hub</span>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="calculators.html">Calculators</a>
+    <a href="profile.html">Profile</a>
+    <button onclick="toggleLocalDarkMode()">🌓 Mode</button>
+  </nav>
+
+  <h1>Investment Calculators</h1>
+
+  <section class="card">
+    <h2>SIP Calculator</h2>
+    <input type="number" id="sipMonthly" placeholder="Monthly Investment (₹)">
+    <input type="number" id="sipRate" placeholder="Rate (%)">
+    <input type="number" id="sipYears" placeholder="Years">
+    <button onclick="calculateSIP()">Calculate</button>
+    <p id="sipResult"></p>
+  </section>
+
+  <section class="card">
+    <h2>Compound Interest</h2>
+    <input type="number" id="ciPrincipal" placeholder="Principal Amount">
+    <input type="number" id="ciRate" placeholder="Rate (%)">
+    <input type="number" id="ciTime" placeholder="Years">
+    <button onclick="calculateCI()">Calculate</button>
+    <p id="ciResult"></p>
+  </section>
+
+  <section class="card">
+    <h2>Loan EMI</h2>
+    <input type="number" id="emiAmount" placeholder="Loan Amount">
+    <input type="number" id="emiRate" placeholder="Interest (%)">
+    <input type="number" id="emiYears" placeholder="Tenure (Years)">
+    <button onclick="calculateEMI()">Calculate</button>
+    <p id="emiResult"></p>
+  </section>
+
+  <section class="card">
+    <h2>Fixed Deposit (FD)</h2>
+    <input type="number" id="fdAmount" placeholder="Deposit Amount">
+    <input type="number" id="fdRate" placeholder="Interest (%)">
+    <input type="number" id="fdYears" placeholder="Years">
+    <button onclick="calculateFD()">Calculate</button>
+    <p id="fdResult"></p>
+  </section>
+
+  <section class="card">
+    <h2>Recurring Deposit (RD)</h2>
+    <input type="number" id="rdMonthly" placeholder="Monthly Deposit">
+    <input type="number" id="rdRate" placeholder="Interest (%)">
+    <input type="number" id="rdMonths" placeholder="Months">
+    <button onclick="calculateRD()">Calculate</button>
+    <p id="rdResult"></p>
+  </section>
+
+  <a href="dashboard.html">Back to Dashboard</a>
+
+  <script src="js/calculators.js"></script>
+  <script>
+    function toggleLocalDarkMode() {
+      const isDark = document.body.classList.toggle("dark-mode");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    }
+  </script>
+</body>
+</html>
