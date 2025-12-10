@@ -2,93 +2,43 @@
 <head>
   <title>Login - WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
+
   <style>
-    .login-container {
-      width: 350px;
-      padding: 30px;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(12px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-      margin: 120px auto;
-      animation: slideDown 0.6s ease;
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-40px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
     body {
-      background: linear-gradient(to right, #0057d9, #0099ff);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+      background: var(--theme-bg);
+      display:flex;justify-content:center;align-items:center;height:100vh;margin:0;
     }
-
-    .login-title {
-      font-size: 26px;
-      margin-bottom: 10px;
-      color: white;
+    .glass-login {
+      width:360px;padding:30px;border-radius:18px;backdrop-filter:blur(12px);
+      background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
+      box-shadow:0 8px 18px rgba(0,0,0,.4);animation:fadeInUp .6s ease;text-align:center;
     }
-
-    .login-sub {
-      color: #e6e6e6;
-      margin-bottom: 20px;
-      font-size: 14px;
-    }
-
-    input {
-      width: 90%;
-      margin: 10px auto;
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      outline: none;
-    }
-
-    .login-btn {
-      width: 95%;
-      padding: 10px;
-      border: none;
-      background: #002b80;
-      color: white;
-      font-size: 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-
-    .login-btn:hover {
-      background: #001f5c;
-    }
-
-    .login-container a {
-      color: #ffffff;
-      text-decoration: underline;
-      font-size: 14px;
-    }
+    input {width:85%;padding:10px;margin:6px;border-radius:8px;border:none;}
+    .login-btn {width:88%;padding:11px;background:var(--theme-accent);border:none;color:white;}
+    .login-btn:hover {background:var(--theme-accent-light);}
   </style>
 </head>
-<body>
 
-  <div class="login-container">
-    <h2 class="login-title">Welcome Back 👋</h2>
-    <p class="login-sub">Login to continue to WealthWise Hub</p>
+<body class="fade-page">
+<div class="glass-login">
+  <h1 style="color:white;">Welcome Back 👋</h1>
+  <p style="color:#dbe9ff;">Login to access dashboard</p>
 
-    <form onsubmit="loginUser(event)">
-      <input type="email" id="loginEmail" placeholder="Enter Email" required><br>
-      <input type="password" id="loginPassword" placeholder="Enter Password" required><br>
-      <button class="login-btn" type="submit">Login</button>
-    </form>
+  <form onsubmit="loginUser(event)">
+    <input type="email" id="loginEmail" placeholder="Enter Email" required><br>
+    <input type="password" id="loginPassword" placeholder="Enter Password" required><br>
+    <button class="login-btn" type="submit">Login</button>
+  </form>
 
-    <p style="margin-top:15px;">
-      <a href="register.html">Don't have an account? Register</a>
-    </p>
-  </div>
+  <p style="margin-top:10px;color:#dbe9ff;">OR</p>
 
-  <script src="js/auth.js"></script>
+  <input type="email" id="pinEmail" placeholder="Email for PIN login"><br>
+  <input type="number" id="pinLogin" placeholder="4-digit PIN"><br>
+  <button onclick="loginWithPin()" class="login-btn">Login with PIN</button>
+
+  <a href="register.html" style="color:white;display:block;margin-top:12px;">Create Account</a>
+</div>
+
+<script src="js/auth.js"></script>
 </body>
 </html>
-

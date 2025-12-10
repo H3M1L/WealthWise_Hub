@@ -3,71 +3,62 @@
   <title>Investment Calculators - WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="initTheme();">
 
-  <nav class="topnav">
-    <span class="logo">WealthWise Hub</span>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="calculators.html">Calculators</a>
-    <a href="profile.html">Profile</a>
-    <button onclick="toggleLocalDarkMode()">🌓 Mode</button>
-  </nav>
+<body class="fade-page" onload="initTheme();">
 
-  <h1>Investment Calculators</h1>
+<nav class="topnav">
+  <span class="logo">WealthWise Hub</span>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="profile.html">Profile</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <button onclick="openThemeModal()">⚙ Settings</button>
+</nav>
 
-  <section class="card">
-    <h2>SIP Calculator</h2>
-    <input type="number" id="sipMonthly" placeholder="Monthly Investment (₹)">
-    <input type="number" id="sipRate" placeholder="Rate (%)">
-    <input type="number" id="sipYears" placeholder="Years">
-    <button onclick="calculateSIP()">Calculate</button>
-    <p id="sipResult"></p>
-  </section>
+<h2 style="color:white;text-align:center;">Investment Calculators</h2>
 
-  <section class="card">
-    <h2>Compound Interest</h2>
-    <input type="number" id="ciPrincipal" placeholder="Principal Amount">
-    <input type="number" id="ciRate" placeholder="Rate (%)">
-    <input type="number" id="ciTime" placeholder="Years">
-    <button onclick="calculateCI()">Calculate</button>
-    <p id="ciResult"></p>
-  </section>
+<section class="glass-card">
+  <h3>SIP Calculator</h3>
+  <input type="number" id="sipInvest" placeholder="Monthly Investment (₹)">
+  <input type="number" id="sipYears" placeholder="Years">
+  <input type="number" id="sipRate" placeholder="Rate: default 12%">
+  <button onclick="sipCalculator()">Calculate SIP</button>
+  <p id="sipResult"></p>
+</section>
 
-  <section class="card">
-    <h2>Loan EMI</h2>
-    <input type="number" id="emiAmount" placeholder="Loan Amount">
-    <input type="number" id="emiRate" placeholder="Interest (%)">
-    <input type="number" id="emiYears" placeholder="Tenure (Years)">
-    <button onclick="calculateEMI()">Calculate</button>
-    <p id="emiResult"></p>
-  </section>
+<section class="glass-card">
+  <h3>FD Calculator</h3>
+  <input type="number" id="fdAmount" placeholder="Deposit (₹)">
+  <input type="number" id="fdYears" placeholder="Years">
+  <input type="number" id="fdRate" placeholder="Rate: default 7%">
+  <button onclick="fdCalculator()">Calculate FD</button>
+  <p id="fdResult"></p>
+</section>
 
-  <section class="card">
-    <h2>Fixed Deposit (FD)</h2>
-    <input type="number" id="fdAmount" placeholder="Deposit Amount">
-    <input type="number" id="fdRate" placeholder="Interest (%)">
-    <input type="number" id="fdYears" placeholder="Years">
-    <button onclick="calculateFD()">Calculate</button>
-    <p id="fdResult"></p>
-  </section>
+<section class="glass-card">
+  <h3>EMI Calculator</h3>
+  <input type="number" id="emiLoan" placeholder="Loan Amount">
+  <input type="number" id="emiYears" placeholder="Years">
+  <input type="number" id="emiRate" placeholder="Interest Rate">
+  <button onclick="emiCalculator()">Calculate EMI</button>
+  <p id="emiResult"></p>
+</section>
 
-  <section class="card">
-    <h2>Recurring Deposit (RD)</h2>
-    <input type="number" id="rdMonthly" placeholder="Monthly Deposit">
-    <input type="number" id="rdRate" placeholder="Interest (%)">
-    <input type="number" id="rdMonths" placeholder="Months">
-    <button onclick="calculateRD()">Calculate</button>
-    <p id="rdResult"></p>
-  </section>
+<!-- Theme Modal -->
+<div id="themeModal" class="theme-modal hidden">
+  <div class="theme-modal-content">
+    <h3>Select Theme</h3>
+    <div class="theme-options">
+      <div class="theme-box" onclick="setTheme('default')"></div>
+      <div class="theme-box" onclick="setTheme('theme-purple')"></div>
+      <div class="theme-box" onclick="setTheme('theme-green')"></div>
+      <div class="theme-box" onclick="setTheme('theme-gold')"></div>
+    </div>
+    <button onclick="closeThemeModal()">Close</button>
+  </div>
+</div>
 
-  <a href="dashboard.html">Back to Dashboard</a>
-
-  <script src="js/calculators.js"></script>
-  <script>
-    function toggleLocalDarkMode() {
-      const isDark = document.body.classList.toggle("dark-mode");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    }
-  </script>
+<script src="js/calculators.js"></script>
+<script src="js/dashboard.js"></script>
 </body>
 </html>

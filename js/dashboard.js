@@ -1,184 +1,183 @@
-// THEME INIT
-function initTheme() {
-  if (localStorage.getItem("theme") === "dark") {
-    document.body.classList.add("dark-mode");
-  }
-}
-
-function toggleDarkMode() {
-  const isDark = document.body.classList.toggle("dark-mode");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-}
-
-// TOASTS
-function showToast(message, type = "info") {
-  const container = document.getElementById("toast-container");
-  const toast = document.createElement("div");
-  toast.className = "toast " + type;
-  toast.innerText = message;
-  container.appendChild(toast);
-  setTimeout(() => {
-    toast.remove();
-  }, 3000);
-}
-
-// LOADER
-function showLoader() {
-  document.getElementById("loader").classList.remove("hidden");
-}
-function hideLoader() {
-  document.getElementById("loader").classList.add("hidden");
+function saveUser(updated) {
+  let users = JSON.parse(localStorage.getItem("users")) || [];
+  users = users.map(u => u.email === updated.email ? updated : u);
+  localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem("loggedInUser", JSON.stringify(updated));
 }
 
 function loadDashboard() {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
   document.getElementById("welcome").innerText = `Welcome, ${user.name}`;
   document.getElementById("balance").innerText = user.balance;
+  document.getElementById("dashProfileImage").src = user.profilePic || "default-avatar.png";
   displayTransactions();
 }
 
 function deposit() {
-  updateBalance("deposit");
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const amount = parseInt(document.getElementById("amount").value);
+  if (!amount || amount <= 0) return alert("Invalid amount");
+
+  user.balance += amount;
+  user.transactions.push({ type:"deposit", amount, date:new Date().toLocaleString() });
+  saveUser(user);
+  loadDashboard();
 }
 
 function withdraw() {
-  updateBalance("withdraw");
-}
-
-function updateBalance(type) {
-  showLoader();
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  const amount = parseFloat(document.getElementById("amount").value);
+  const amount = parseInt(document.getElementById("amount").value);
+  if (!amount || amount <= 0) return alert("Invalid amount");
+  if (amount > user.balance) return alert("Insufficient balance");
 
-  if (isNaN(amount) || amount <= 0) {
-    hideLoader();
-    showToast("Enter a valid amount", "error");
-    return;
-  }
-
-  if (type === "withdraw" && amount > user.balance) {
-    hideLoader();
-    showToast("Insufficient funds", "error");
-    return;
-  }
-
-  user.balance = type === "deposit" ? user.balance + amount : user.balance - amount;
-
-  user.transactions.push({
-    type,
-    amount,
-    date: new Date().toLocaleString(),
-    month: new Date().getMonth()
-  });
-
+  user.balance -= amount;
+  user.transactions.push({ type:"withdraw", amount, date:new Date().toLocaleString() });
   saveUser(user);
   loadDashboard();
-  drawChart();
-  hideLoader();
-  showToast(type === "deposit" ? "Deposit successful" : "Withdrawal successful", "success");
 }
 
-function saveUser(updatedUser) {
-  const users = JSON.parse(localStorage.getItem("users"));
-  const index = users.findIndex(u => u.email === updatedUser.email);
-  users[index] = updatedUser;
-  localStorage.setItem("users", JSON.stringify(users));
-  localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
+/* PROFILE */
+function uploadProfilePic() {
+  const file = document.getElementById("imageUpload").files[0];
+  const reader = new FileReader();
+  reader.onload = e => {
+    const user = JSON.parse(localStorage.getItem("loggedInUser"));
+    user.profilePic = e.target.result;
+    saveUser(user);
+    document.getElementById("profileImage").src = user.profilePic;
+  };
+  reader.readAsDataURL(file);
 }
+
+function removeProfilePic() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  delete user.profilePic;
+  saveUser(user);
+  document.getElementById("profileImage").src = "default-avatar.png";
+}
+
+function loadProfile() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  document.getElementById("profileName").innerText = user.name;
+  document.getElementById("profileEmail").innerText = user.email;
+  document.getElementById("profileBalance").innerText = user.balance;
+  document.getElementById("profileTxCount").innerText = user.transactions.length;
+  document.getElementById("profileImage").src = user.profilePic || "default-avatar.png";
+  document.getElementById("editName").value = user.name;
+  document.getElementById("editEmail").value = user.email;
+}
+
+function updateProfile() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  user.name = document.getElementById("editName").value;
+  user.email = document.getElementById("editEmail").value;
+  saveUser(user);
+  alert("Profile Updated");
+}
+
+function changePassword() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const oldPass = document.getElementById("oldPassword").value;
+  const newPass = document.getElementById("newPassword").value;
+
+  if (oldPass !== user.password) return alert("Wrong password");
+  user.password = newPass;
+  saveUser(user);
+  alert("Password changed");
+}
+
+/* PIN */
+function setPin() {
+  const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  const pin = document.getElementById("pinInput").value;
+  if (pin.length !== 4) return alert("PIN must be 4 digits");
+  user.pin = pin;
+  saveUser(user);
+  alert("PIN Saved");
+}
+
+/* SEARCH / FILTER / SORT */
+let txFilter = "all";
+function setFilter(f) { txFilter = f; updateTxView(); }
 
 function displayTransactions() {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
+  let txs = [...user.transactions];
+
+  const search = document.getElementById("searchTx")?.value?.toLowerCase() || "";
+  if (search) txs = txs.filter(t => t.type.includes(search) || t.date.includes(search));
+
+  if (txFilter !== "all") txs = txs.filter(t => t.type === txFilter);
+
+  const sortVal = document.getElementById("sortTx")?.value || "latest";
+  if (sortVal === "latest") txs.sort((a,b)=>new Date(b.date)-new Date(a.date));
+  if (sortVal === "oldest") txs.sort((a,b)=>new Date(a.date)-new Date(b.date));
+  if (sortVal === "high") txs.sort((a,b)=>b.amount - a.amount);
+  if (sortVal === "low") txs.sort((a,b)=>a.amount - b.amount);
+
   const list = document.getElementById("transactionList");
   list.innerHTML = "";
-  user.transactions.forEach(t => {
+  txs.forEach(t => {
     const li = document.createElement("li");
-    li.innerText = `${t.type.toUpperCase()} - ₹${t.amount} - ${t.date}`;
+    li.innerText = `${t.type.toUpperCase()} | ₹${t.amount} | ${t.date}`;
     list.appendChild(li);
   });
 }
 
-function drawChart() {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  const amounts = user.transactions.map(t => t.type === "deposit" ? t.amount : -t.amount);
-  const canvas = document.getElementById("balanceChart");
-  const ctx = canvas.getContext("2d");
+function updateTxView() { displayTransactions(); }
 
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-  ctx.moveTo(10, 150);
-
-  let total = 0;
-  for (let i = 0; i < amounts.length; i++) {
-    total += amounts[i];
-    ctx.lineTo(10 + (i * 30), 150 - total * 0.1); // scaling factor
-  }
-  ctx.strokeStyle = "#0066ff";
-  ctx.stroke();
-}
-
-function monthlySpend() {
-  const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  const month = new Date().getMonth();
-
-  const spent = user.transactions
-    .filter(t => t.type === "withdraw" && t.month === month)
-    .reduce((sum, t) => sum + t.amount, 0);
-
-  showToast("This month you spent: ₹" + spent, "info");
-}
-
-function goalPrediction() {
-  const goal = parseFloat(document.getElementById("goalAmount").value);
-  const save = parseFloat(document.getElementById("goalMonthly").value);
-  if (isNaN(goal) || isNaN(save) || goal <= 0 || save <= 0) {
-    showToast("Enter valid goal and monthly amount", "error");
-    return;
-  }
-  const months = Math.ceil(goal / save);
-  document.getElementById("goalResult").innerText =
-    `Goal will be achieved in ${months} months (~${(months / 12).toFixed(1)} years).`;
-}
-
+/* PDF + CSV */
 function exportPDF() {
-  showLoader();
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  let content = `
-WealthWise Hub Report
-User: ${user.name}
-Email: ${user.email}
-Current Balance: ₹${user.balance}
-Total Transactions: ${user.transactions.length}
-Generated: ${new Date().toLocaleString()}
-`;
+  const content = `
+   === WealthWise Report ===
+   Name: ${user.name}
+   Balance: ₹${user.balance}
+   Total Transactions: ${user.transactions.length}
+  `;
   const blob = new Blob([content], { type: "application/pdf" });
-  const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "bank-report.pdf";
+  a.href = URL.createObjectURL(blob);
+  a.download = "WealthWise_Report.pdf";
   a.click();
-  hideLoader();
-  showToast("PDF downloaded", "success");
 }
 
 function exportCSV() {
   const user = JSON.parse(localStorage.getItem("loggedInUser"));
-  const rows = [
-    ["Type", "Amount", "Date"]
-  ];
-  user.transactions.forEach(t => {
-    rows.push([t.type, t.amount, t.date]);
-  });
-
-  let csvContent = rows.map(e => e.join(",")).join("\n");
-  const blob = new Blob([csvContent], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
+  let csv = "Type,Amount,Date\n";
+  user.transactions.forEach(t => csv += `${t.type},₹${t.amount},${t.date}\n`);
   const a = document.createElement("a");
-  a.href = url;
+  a.href = URL.createObjectURL(new Blob([csv]));
   a.download = "transactions.csv";
   a.click();
-  showToast("CSV exported", "success");
 }
 
+/* AI ADVICE */
+function getAdvice() {
+  const q = document.getElementById("adviceInput").value.toLowerCase();
+  let ans = "Stay consistent and diversify for long-term wealth.";
+  if (q.includes("sip")) ans = "Increase SIP yearly with salary growth.";
+  if (q.includes("emi") || q.includes("loan")) ans = "Keep EMIs under 40% of income.";
+  if (q.includes("stocks")) ans = "Don't invest emotionally & diversify.";
+  document.getElementById("adviceOutput").innerText = ans;
+}
+
+/* THEME MODAL */
+function openThemeModal() { document.getElementById("themeModal").classList.remove("hidden"); }
+function closeThemeModal() { document.getElementById("themeModal").classList.add("hidden"); }
+
+function setTheme(themeName) {
+  document.body.classList.remove("theme-purple", "theme-green", "theme-gold");
+  if (themeName !== "default") document.body.classList.add(themeName);
+  localStorage.setItem("themeMode", themeName);
+}
+
+function initTheme() {
+  const saved = localStorage.getItem("themeMode");
+  if (saved && saved !== "default") document.body.classList.add(saved);
+}
+
+/* SCROLL */
 function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({ behavior: "smooth" });
 }

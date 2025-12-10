@@ -3,38 +3,64 @@
   <title>Profile - WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body onload="initTheme(); checkAuth(); loadProfile();">
 
-  <nav class="topnav">
-    <span class="logo">WealthWise Hub</span>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="calculators.html">Calculators</a>
-    <a href="profile.html">Profile</a>
-    <button onclick="toggleDarkMode()">🌓 Mode</button>
-    <button onclick="logoutUser()">Logout</button>
-  </nav>
+<body class="fade-page" onload="checkAuth(); loadProfile();">
 
-  <main class="main">
-    <section class="card">
-      <h2>Profile</h2>
-      <p><strong>Name:</strong> <span id="profileName"></span></p>
-      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
-      <p><strong>Current Balance:</strong> ₹<span id="profileBalance"></span></p>
-      <p><strong>Total Transactions:</strong> <span id="profileTxCount"></span></p>
-    </section>
-  </main>
+<nav class="topnav">
+  <span class="logo">WealthWise Hub</span>
+  <a href="dashboard.html">Dashboard</a>
+  <a href="calculators.html">Calculators</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+  <button onclick="openThemeModal()">⚙ Settings</button>
+  <button onclick="logoutUser()">Logout</button>
+</nav>
 
-  <script src="js/auth.js"></script>
-  <script src="js/dashboard.js"></script>
-  <script>
-    function loadProfile() {
-      const user = JSON.parse(localStorage.getItem("loggedInUser"));
-      if (!user) return;
-      document.getElementById("profileName").innerText = user.name;
-      document.getElementById("profileEmail").innerText = user.email;
-      document.getElementById("profileBalance").innerText = user.balance;
-      document.getElementById("profileTxCount").innerText = user.transactions.length;
-    }
-  </script>
+<section class="glass-card">
+  <h2>Profile</h2>
+
+  <img id="profileImage" class="profile-img" src="default-avatar.png" alt="Profile Picture">
+  <input type="file" id="imageUpload" accept="image/*" onchange="uploadProfilePic()">
+
+  <h3>Account Details</h3>
+  <p><strong>Name:</strong> <span id="profileName"></span></p>
+  <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+  <p><strong>Current Balance:</strong> ₹<span id="profileBalance"></span></p>
+  <p><strong>Total Transactions:</strong> <span id="profileTxCount"></span></p>
+
+  <h3>Edit Profile</h3>
+  <input type="text" id="editName" placeholder="New Name">
+  <input type="email" id="editEmail" placeholder="New Email">
+  <button onclick="updateProfile()">Save Profile</button>
+
+  <h3>Change Password</h3>
+  <input type="password" id="oldPassword" placeholder="Current Password">
+  <input type="password" id="newPassword" placeholder="New Password">
+  <button onclick="changePassword()">Change Password</button>
+
+  <h3>Quick Login PIN</h3>
+  <input type="number" id="pinInput" placeholder="Set 4-digit PIN">
+  <button onclick="setPin()">Save PIN</button>
+
+  <button onclick="removeProfilePic()" style="background:#c82a2a;margin-top:10px;">Remove Picture</button>
+</section>
+
+<!-- Theme Modal -->
+<div id="themeModal" class="theme-modal hidden">
+  <div class="theme-modal-content">
+    <h3>Select Theme</h3>
+    <div class="theme-options">
+      <div class="theme-box" onclick="setTheme('default')"></div>
+      <div class="theme-box" onclick="setTheme('theme-purple')"></div>
+      <div class="theme-box" onclick="setTheme('theme-green')"></div>
+      <div class="theme-box" onclick="setTheme('theme-gold')"></div>
+    </div>
+    <button onclick="closeThemeModal()">Close</button>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/dashboard.js"></script>
+
 </body>
 </html>
