@@ -2,7 +2,6 @@
 <head>
   <title>Login - WealthWise Hub</title>
   <link rel="stylesheet" href="css/style.css">
-
   <style>
     body {
       background: var(--theme-bg);
@@ -13,9 +12,10 @@
       background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);
       box-shadow:0 8px 18px rgba(0,0,0,.4);animation:fadeInUp .6s ease;text-align:center;
     }
-    input {width:85%;padding:10px;margin:6px;border-radius:8px;border:none;}
-    .login-btn {width:88%;padding:11px;background:var(--theme-accent);border:none;color:white;}
+    input {width:85%;padding:10px;margin:6px;border-radius:8px;border:none;outline:none;}
+    .login-btn {width:88%;padding:11px;background:var(--theme-accent);border:none;color:white;border-radius:8px;cursor:pointer;}
     .login-btn:hover {background:var(--theme-accent-light);}
+    @keyframes fadeInUp {from{opacity:0;transform:translateY(40px);}to{opacity:1;transform:translateY(0);}}
   </style>
 </head>
 

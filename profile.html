@@ -4,7 +4,7 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body class="fade-page" onload="checkAuth(); loadProfile();">
+<body class="fade-page" onload="initTheme(); checkAuth(); loadProfile();">
 
 <nav class="topnav">
   <span class="logo">WealthWise Hub</span>
@@ -45,7 +45,7 @@
   <button onclick="removeProfilePic()" style="background:#c82a2a;margin-top:10px;">Remove Picture</button>
 </section>
 
-<!-- Theme Modal -->
+<!-- Theme Modal (reuse) -->
 <div id="themeModal" class="theme-modal hidden">
   <div class="theme-modal-content">
     <h3>Select Theme</h3>
@@ -61,6 +61,6 @@
 
 <script src="js/auth.js"></script>
 <script src="js/dashboard.js"></script>
-
+<script src="js/tilt.js"></script>
 </body>
 </html>

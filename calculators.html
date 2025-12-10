@@ -1,4 +1,3 @@
-=<!DOCTYPE html>
 <html>
 <head>
   <title>Investment Calculators | WealthWise Hub</title>
@@ -16,76 +15,73 @@
   <button onclick="openThemeModal()">⚙ Settings</button>
 </nav>
 
-<h2 style="color:white;text-align:center;margin-top:20px;">Investment Calculators Suite</h2>
+<h2 class="page-title">Investment Calculators Suite</h2>
 
-<!-- SIP -->
-<section class="glass-card">
-  <h3>SIP Calculator</h3>
-  <input type="number" id="sipInvest" placeholder="Monthly Investment (₹)">
-  <input type="number" id="sipYears" placeholder="Years">
-  <input type="number" id="sipRate" placeholder="Rate (default 12%)">
-  <button onclick="sipCalculator()">Calculate</button>
-  <p id="sipResult"></p>
-</section>
+<div class="calc-grid">
 
-<!-- FD -->
-<section class="glass-card">
-  <h3>Fixed Deposit (FD) Calculator</h3>
-  <input type="number" id="fdAmount" placeholder="Deposit (₹)">
-  <input type="number" id="fdYears" placeholder="Years">
-  <input type="number" id="fdRate" placeholder="Rate (default 7%)">
-  <button onclick="fdCalculator()">Calculate</button>
-  <p id="fdResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>SIP Calculator</h3>
+    <input type="number" id="sipInvest" placeholder="Monthly Investment (₹)">
+    <input type="number" id="sipYears" placeholder="Years">
+    <input type="number" id="sipRate" placeholder="Rate (default 12%)">
+    <button onclick="sipCalculator()">Calculate</button>
+    <p id="sipResult"></p>
+  </section>
 
-<!-- EMI -->
-<section class="glass-card">
-  <h3>Loan EMI Calculator</h3>
-  <input type="number" id="emiLoan" placeholder="Loan Amount">
-  <input type="number" id="emiYears" placeholder="Years">
-  <input type="number" id="emiRate" placeholder="Interest Rate">
-  <button onclick="emiCalculator()">Calculate</button>
-  <p id="emiResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>Fixed Deposit (FD)</h3>
+    <input type="number" id="fdAmount" placeholder="Deposit (₹)">
+    <input type="number" id="fdYears" placeholder="Years">
+    <input type="number" id="fdRate" placeholder="Rate (default 7%)">
+    <button onclick="fdCalculator()">Calculate</button>
+    <p id="fdResult"></p>
+  </section>
 
-<!-- COMPOUND INTEREST -->
-<section class="glass-card">
-  <h3>Compound Interest Calculator</h3>
-  <input type="number" id="ciPrincipal" placeholder="Principal (₹)">
-  <input type="number" id="ciRate" placeholder="Interest Rate %">
-  <input type="number" id="ciYears" placeholder="Years">
-  <button onclick="compoundInterest()">Calculate</button>
-  <p id="ciResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>Loan EMI</h3>
+    <input type="number" id="emiLoan" placeholder="Loan Amount">
+    <input type="number" id="emiYears" placeholder="Years">
+    <input type="number" id="emiRate" placeholder="Interest Rate">
+    <button onclick="emiCalculator()">Calculate</button>
+    <p id="emiResult"></p>
+  </section>
 
-<!-- SIMPLE INTEREST -->
-<section class="glass-card">
-  <h3>Simple Interest Calculator</h3>
-  <input type="number" id="siPrincipal" placeholder="Principal (₹)">
-  <input type="number" id="siRate" placeholder="Interest Rate %">
-  <input type="number" id="siYears" placeholder="Years">
-  <button onclick="simpleInterest()">Calculate</button>
-  <p id="siResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>Compound Interest</h3>
+    <input type="number" id="ciPrincipal" placeholder="Principal (₹)">
+    <input type="number" id="ciRate" placeholder="Rate %">
+    <input type="number" id="ciYears" placeholder="Years">
+    <button onclick="compoundInterest()">Calculate</button>
+    <p id="ciResult"></p>
+  </section>
 
-<!-- SWP CALCULATOR -->
-<section class="glass-card">
-  <h3>SWP - Systematic Withdrawal Plan</h3>
-  <input type="number" id="swpCorpus" placeholder="Total Corpus (₹)">
-  <input type="number" id="swpMonthly" placeholder="Monthly Withdrawal (₹)">
-  <input type="number" id="swpRate" placeholder="Return Rate % (default 12)">
-  <button onclick="swpCalculator()">Calculate</button>
-  <p id="swpResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>Simple Interest</h3>
+    <input type="number" id="siPrincipal" placeholder="Principal (₹)">
+    <input type="number" id="siRate" placeholder="Rate %">
+    <input type="number" id="siYears" placeholder="Years">
+    <button onclick="simpleInterest()">Calculate</button>
+    <p id="siResult"></p>
+  </section>
 
-<!-- Retirement Corpus -->
-<section class="glass-card">
-  <h3>Retirement Corpus Needed</h3>
-  <input type="number" id="rtMonthly" placeholder="Monthly Expense After Retirement">
-  <input type="number" id="rtYears" placeholder="Years After Retirement">
-  <button onclick="retirementNeed()">Calculate</button>
-  <p id="rtResult"></p>
-</section>
+  <section class="glass-card">
+    <h3>SWP Withdrawal</h3>
+    <input type="number" id="swpCorpus" placeholder="Total Corpus (₹)">
+    <input type="number" id="swpMonthly" placeholder="Monthly Withdrawal (₹)">
+    <input type="number" id="swpRate" placeholder="Return % (default 12)">
+    <button onclick="swpCalculator()">Calculate</button>
+    <p id="swpResult"></p>
+  </section>
+
+  <section class="glass-card">
+    <h3>Retirement Corpus</h3>
+    <input type="number" id="rtMonthly" placeholder="Monthly Required After Retirement">
+    <input type="number" id="rtYears" placeholder="Years Expected">
+    <button onclick="retirementNeed()">Calculate</button>
+    <p id="rtResult"></p>
+  </section>
+
+</div>
 
 <!-- Theme Modal -->
 <div id="themeModal" class="theme-modal hidden">
@@ -103,5 +99,6 @@
 
 <script src="js/calculators.js"></script>
 <script src="js/dashboard.js"></script>
+<script src="js/tilt.js"></script>
 </body>
 </html>

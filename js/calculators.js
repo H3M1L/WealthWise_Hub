@@ -4,6 +4,11 @@ function sipCalculator() {
   let years = parseInt(document.getElementById("sipYears").value);
   let rate = parseFloat(document.getElementById("sipRate").value) || 12;
 
+  if (!invest || !years) {
+    document.getElementById("sipResult").innerText = "Enter valid investment and years.";
+    return;
+  }
+
   let months = years * 12;
   let r = rate / 12 / 100;
   let future = invest * (((1 + r) ** months - 1) / r) * (1 + r);
@@ -17,6 +22,11 @@ function fdCalculator() {
   let years = parseInt(document.getElementById("fdYears").value);
   let rate = parseFloat(document.getElementById("fdRate").value) || 7;
 
+  if (!amount || !years) {
+    document.getElementById("fdResult").innerText = "Enter valid amount and years.";
+    return;
+  }
+
   let future = amount * ((1 + rate / 100) ** years);
   document.getElementById("fdResult").innerText = `Maturity: ₹${Math.round(future).toLocaleString()}`;
 }
@@ -26,9 +36,14 @@ function emiCalculator() {
   let loan = parseInt(document.getElementById("emiLoan").value);
   let years = parseInt(document.getElementById("emiYears").value);
   let rate = parseFloat(document.getElementById("emiRate").value);
+
+  if (!loan || !years || !rate) {
+    document.getElementById("emiResult").innerText = "Enter valid loan, years and rate.";
+    return;
+  }
+
   let r = rate / 12 / 100;
   let n = years * 12;
-
   let emi = loan * r * ((1 + r) ** n) / (((1 + r) ** n) - 1);
   document.getElementById("emiResult").innerText = `Monthly EMI: ₹${Math.round(emi).toLocaleString()}`;
 }
@@ -38,6 +53,11 @@ function compoundInterest() {
   let p = parseInt(document.getElementById("ciPrincipal").value);
   let r = parseFloat(document.getElementById("ciRate").value) / 100;
   let t = parseInt(document.getElementById("ciYears").value);
+
+  if (!p || !r || !t) {
+    document.getElementById("ciResult").innerText = "Enter valid principal, rate and years.";
+    return;
+  }
 
   let amount = p * Math.pow((1 + r), t);
   document.getElementById("ciResult").innerText = `Future Value: ₹${Math.round(amount).toLocaleString()}`;
@@ -49,9 +69,14 @@ function simpleInterest() {
   let r = parseFloat(document.getElementById("siRate").value);
   let t = parseInt(document.getElementById("siYears").value);
 
+  if (!p || !r || !t) {
+    document.getElementById("siResult").innerText = "Enter valid principal, rate and years.";
+    return;
+  }
+
   let si = (p * r * t) / 100;
   document.getElementById("siResult").innerText =
-    `Interest Earned: ₹${Math.round(si).toLocaleString()} | Total: ₹${Math.round(p + si).toLocaleString()}`;
+    `Interest: ₹${Math.round(si).toLocaleString()} | Total: ₹${Math.round(p + si).toLocaleString()}`;
 }
 
 /* SWP WITHDRAWAL */
@@ -59,6 +84,11 @@ function swpCalculator() {
   let corpus = parseInt(document.getElementById("swpCorpus").value);
   let withdrawal = parseInt(document.getElementById("swpMonthly").value);
   let rate = parseFloat(document.getElementById("swpRate").value) || 12;
+
+  if (!corpus || !withdrawal) {
+    document.getElementById("swpResult").innerText = "Enter valid corpus and withdrawal.";
+    return;
+  }
 
   let months = 0;
   let balance = corpus;
@@ -71,13 +101,18 @@ function swpCalculator() {
   }
 
   let years = (months / 12).toFixed(1);
-  document.getElementById("swpResult").innerText = `Corpus lasts for approx: ${years} years`;
+  document.getElementById("swpResult").innerText = `Corpus lasts approx: ${years} years`;
 }
 
 /* RETIREMENT CORPUS REQUIRED */
 function retirementNeed() {
   let monthly = parseInt(document.getElementById("rtMonthly").value);
   let years = parseInt(document.getElementById("rtYears").value);
+
+  if (!monthly || !years) {
+    document.getElementById("rtResult").innerText = "Enter valid monthly expenses and years.";
+    return;
+  }
 
   let totalNeeded = monthly * 12 * years;
   document.getElementById("rtResult").innerText = `Approx Corpus Needed: ₹${totalNeeded.toLocaleString()}`;

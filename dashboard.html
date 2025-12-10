@@ -15,7 +15,7 @@
 <!-- LOADER -->
 <div id="loader" class="loader hidden"><div class="spinner"></div></div>
 
-<!-- TOAST -->
+<!-- TOAST (not used currently but kept) -->
 <div id="toast-container" class="toast-container"></div>
 
 <!-- NAV -->
@@ -42,31 +42,26 @@
 
 <!-- MAIN -->
 <main class="main">
-
   <h2 id="welcome"></h2>
   <img id="dashProfileImage" class="profile-img" style="width:60px;height:60px;">
 
-  <!-- BALANCE -->
   <section id="balanceSection" class="glass-card dashboard-container">
     <h3>Balance: ₹<span id="balance">0</span></h3>
     <canvas id="balanceChart" width="350" height="200"></canvas>
   </section>
 
-  <!-- DEPOSIT -->
   <section id="depositSection" class="glass-card">
     <h3>Deposit Money</h3>
     <input type="number" id="amount" placeholder="Enter amount">
     <button onclick="deposit()">Deposit</button>
   </section>
 
-  <!-- WITHDRAW -->
   <section id="withdrawSection" class="glass-card">
     <h3>Withdraw Money</h3>
     <input type="number" id="amount" placeholder="Enter amount">
     <button onclick="withdraw()">Withdraw</button>
   </section>
 
-  <!-- GOALS -->
   <section id="goalSection" class="glass-card">
     <h3>Goal Savings Predictor</h3>
     <input type="number" id="goalAmount" placeholder="Goal (₹)">
@@ -75,7 +70,6 @@
     <p id="goalResult"></p>
   </section>
 
-  <!-- REPORT -->
   <section id="reportSection" class="glass-card">
     <h3>Report / Analytics</h3>
 
@@ -103,14 +97,12 @@
     <ul id="transactionList"></ul>
   </section>
 
-  <!-- AI ADVISOR -->
   <section id="adviceSection" class="glass-card">
     <h3>Investment Advisor (Beta)</h3>
     <textarea id="adviceInput" rows="3" style="width:90%;border-radius:8px;border:none;padding:8px;" placeholder="Ask something like: Should I increase my SIP?"></textarea><br>
     <button onclick="getAdvice()">Get Advice</button>
     <p id="adviceOutput" style="margin-top:10px;font-size:14px;"></p>
   </section>
-
 </main>
 
 <!-- THEME SETTINGS MODAL -->
@@ -127,8 +119,23 @@
   </div>
 </div>
 
+<!-- AI Floating Assistant -->
+<div id="aiAssistant" class="ai-button" onclick="toggleAIChat()">🤖</div>
+
+<div id="aiChatBox" class="ai-chat hidden">
+  <div class="ai-header">
+    <span>WealthWise AI Advisor</span>
+    <button onclick="toggleAIChat()">✖</button>
+  </div>
+  <div id="aiMessages" class="ai-messages"></div>
+  <div class="ai-input">
+    <input type="text" id="aiInput" placeholder="Ask investment questions..." onkeypress="if(event.key==='Enter') sendAI()">
+    <button onclick="sendAI()">Send</button>
+  </div>
+</div>
+
 <script src="js/auth.js"></script>
 <script src="js/dashboard.js"></script>
-
+<script src="js/tilt.js"></script>
 </body>
 </html>
